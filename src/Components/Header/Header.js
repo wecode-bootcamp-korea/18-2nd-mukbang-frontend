@@ -2,7 +2,7 @@ import React from 'react';
 import './Header.scss';
 
 const Header = () => {
-  return <div></div>;
+  return <header className="header"></header>;
 };
 
 export default Header;
