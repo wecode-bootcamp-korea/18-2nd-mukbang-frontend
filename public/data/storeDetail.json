@@ -1,0 +1,32 @@
+[
+  {
+    "name": "스타벅스",
+    "store_images": "https://www.chrischae.kr/content/images/size/w1200/2019/12/starbucks1.jpg",
+    "introduction": "세상에서 제일 맛있는 아메리카노",
+    "address_si": "서울시",
+    "address_gu": "강남구",
+    "address_dong": "논현동",
+    "address_detail": "강남구 논현동",
+    "categories": "카페/커피",
+    "time_open": "10시",
+    "time_break": "15시 30분",
+    "phone_number": "010-3333-1234",
+    "sns_url": "asdfasdf@inaasdf.com",
+    "reservation": 1,
+    "parking": 0,
+    "toilet": 0,
+    "latitude": 0,
+    "longitude": 0,
+    "best_menu": "아메리카노",
+    "best_menu_price": 4000.0,
+    "menu_description": "메뉴소개메뉴소개메뉴소개",
+    "wifi": 0,
+    "metro_stations": ["사당역", "선릉역", "잠실역"],
+    "reviews": [
+      {
+        "rating": "3.5",
+        "description": "너무 맛있어요."
+      }
+    ]
+  }
+]

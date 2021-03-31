@@ -1,3 +1,19 @@
+import { createGlobalStyle } from 'styled-components';
+import reset from 'styled-reset';
+
+const GlobalStyle = createGlobalStyle`
+${reset}
+*{
+  box-sizing: border-box;
+}
+a{
+  text-decoration: none;
+}
+input, button{
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
 html,
 body,
 div,
@@ -122,3 +138,6 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
+`;
+
+export default GlobalStyle;
