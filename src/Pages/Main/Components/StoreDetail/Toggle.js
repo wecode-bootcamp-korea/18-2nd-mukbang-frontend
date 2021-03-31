@@ -5,7 +5,9 @@ const Toggle = props => {
   return (
     <ToggleStyle>
       {props.title}
-      <button>{0 ? BiChevronDown() : BiChevronUp()}</button>
+      <button onClick={props.activeToggle}>
+        {props.isActive ? BiChevronUp() : BiChevronDown()}
+      </button>
     </ToggleStyle>
   );
 };

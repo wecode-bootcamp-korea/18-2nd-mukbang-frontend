@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Rodeview from './Roadview';
 import Toggle from './Toggle';
 import StoreInfo from './StoreInfo';
@@ -10,12 +10,19 @@ import styled from 'styled-components';
 
 const StoreDetail = () => {
   // const [data, setData] = useState([]);
-  // useEffect(() => {
+  // const useEffect() => {
   //   fetch('/data/storeDetail.json')
   //     .then(res => res.json())
-  //     .then(data => setData(data));
-  // }, []);
+  //     .then(data => useState(data));
+  // }, [];
 
+  const [isActive, setActive] = useState(false);
+  // const [title, setTitle] = useState('');
+  const activeToggle = e => {
+    setActive(!isActive);
+    console.log(e);
+    // setTitle(title=e.target)
+  };
   return (
     <Detail>
       <Compo>
@@ -28,29 +35,53 @@ const StoreDetail = () => {
         <>
           <Preview />
           <Info>
-            <Toggle title="가게 정보" />
-            <StoreInfo />
+            <Toggle
+              isActive={isActive}
+              activeToggle={activeToggle}
+              title="가게 정보"
+            />
+            {isActive && console.log() /*<StoreInfo />*/}
           </Info>
           <Info>
-            <Toggle title="메뉴" />
-            <Content>
-              <Menu />
-            </Content>
+            <Toggle
+              isActive={isActive}
+              activeToggle={activeToggle}
+              title="메뉴"
+            />
+            {isActive && (
+              <Content>
+                <Menu />
+              </Content>
+            )}
           </Info>
           <Info>
-            <Toggle title="위치" />
-            <Content>
-              강남구 논현동
-              <Map />
-            </Content>
+            <Toggle
+              isActive={isActive}
+              activeToggle={activeToggle}
+              title="위치"
+            />
+            {isActive && (
+              <Content>
+                강남구 논현동
+                <Map />
+              </Content>
+            )}
           </Info>
           <Info>
-            <Toggle title="인근 전철역" />
-            <Content>사당역, 잠실역, 선릉역</Content>
+            <Toggle
+              isActive={isActive}
+              activeToggle={activeToggle}
+              title="인근 전철역"
+            />
+            {isActive && <Content>사당역, 잠실역, 선릉역</Content>}
           </Info>
           <Info>
-            <Toggle title="리뷰" />
-            <Content>아메리카노가 맛있는 집입니다.</Content>
+            <Toggle
+              isActive={isActive}
+              activeToggle={activeToggle}
+              title="리뷰"
+            />
+            {isActive && <Content>아메리카노가 맛있는 집입니다.</Content>}
           </Info>
         </>
       )}
@@ -92,3 +123,11 @@ const Detail = styled.div`
   height: 100%;
   border-left: 1px solid #333;
 `;
+
+const TITLE = [
+  { 1: '가게 정보' },
+  { 2: '위치' },
+  { 3: '메뉴' },
+  { 4: '인근 전철역' },
+  { 5: '리뷰' },
+];
