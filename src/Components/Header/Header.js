@@ -120,8 +120,9 @@ const HeaderBox = styled.header`
   top: 0;
   left: 0;
   width: 100%;
-  height: 130px;
+  max-height: 130px;
   z-index: 10;
+  background: #fff;
 `;
 
 const InnerTop = styled.div`
