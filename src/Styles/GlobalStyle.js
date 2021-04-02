@@ -17,5 +17,4 @@ input, button{
   outline: none;
 }
 `;
-
 export default GlobalStyle;
