@@ -18,11 +18,7 @@ const Info = props => {
   ]);
 
   const activeToggle = index => {
-    let toggleClick = [...isActive];
-    for (let i = 0; i < 6; i++) {
-      i <= index ? (toggleClick[i] = true) : (toggleClick[i] = false);
-    }
-    setActive(toggleClick);
+    setActive(!isActive[index]);
   };
 
   const INFO = [
@@ -63,7 +59,23 @@ const Info = props => {
     },
     {
       title: '인근 전철역',
-      content: <Content>{props.metro_stations.toString()}</Content>,
+      content: (
+        <Content>
+          {props.metro_stations.map((data, idx) => (
+            <ul key={idx}>
+              <Distance>
+                {(data.name + '(' + data.line + ')').toString()}까지 거리:{' '}
+                <span>
+                  {Number(
+                    data.distance_from_store_m.toString().split('.')[0]
+                  ).toLocaleString()}
+                  m
+                </span>
+              </Distance>
+            </ul>
+          ))}
+        </Content>
+      ),
     },
     {
       title: '방문자 사진',
@@ -77,7 +89,7 @@ const Info = props => {
       title: '리뷰',
       content: (
         <Content>
-          <Review reviews={props.reviews} />
+          <Review reviews={props.reviews} id={props.id} />
         </Content>
       ),
     },
@@ -90,10 +102,10 @@ const Info = props => {
           <Toggle>
             {data.title}
             <Button onClick={() => activeToggle(idx)}>
-              {isActive[idx] ? BiChevronUp() : BiChevronDown()}
+              {isActive ? BiChevronUp() : BiChevronDown()}
             </Button>
           </Toggle>
-          {isActive[idx] && data.content}
+          {isActive && data.content}
         </Infomation>
       ))}
     </>
@@ -127,4 +139,12 @@ const Content = styled.div`
   border-top: 1px solid rgb(238, 238, 238);
   padding: 18px 0px;
   color: #757575;
+`;
+
+const Distance = styled.li`
+  line-height: 25px;
+  & span {
+    color: #2d60a3;
+    font-weight: bold;
+  }
 `;

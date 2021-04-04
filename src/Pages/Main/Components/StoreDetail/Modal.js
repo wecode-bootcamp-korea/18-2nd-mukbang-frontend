@@ -1,42 +1,17 @@
 import styled from 'styled-components';
-import React, { useState } from 'react';
-import { BsStarFill, BsStar, BsStarHalf } from 'react-icons/bs';
+import React, { useState, useEffect } from 'react';
+import { BsStarFill, BsStar } from 'react-icons/bs';
 
 const Modal = props => {
-  const [starFilled, setStar] = useState([false, false, false, false, false]);
-  const [postData, setData] = useState({
-    rating: '',
-    content: '',
-    image_url: '',
-  });
+  const [starFilled, setStar] = useState(Array(5).fill(false));
+  const [postData, setPost] = useState({});
 
   const handleStarFill = index => {
-    let click = [...starFilled];
+    const click = [...starFilled];
     for (let i = 0; i < 5; i++) {
-      i <= index ? (click[i] = true) : (click[i] = false);
+      click[i] = i <= index;
     }
     setStar(click);
-    setData({
-      rating: rating,
-    });
-  };
-
-  const handleImgLink = e => {
-    setData({
-      image_url: e.target.value,
-    });
-  };
-
-  const handleContent = e => {
-    setData({
-      content: e.target.value,
-    });
-  };
-
-  const register = e => {
-    // fetch('', 'POST');
-    e.preventDefault();
-    console.log(postData);
   };
 
   const rating = starFilled[4]
@@ -50,6 +25,37 @@ const Modal = props => {
     : starFilled[0]
     ? 1.0
     : 0;
+
+  useEffect(() => {
+    setPost({ ...postData, rating: rating });
+  }, [starFilled]);
+
+  const handleImgLink = e => {
+    setPost({ ...postData, image_url: e.target.value });
+  };
+
+  const handleContent = e => {
+    setPost({ ...postData, content: e.target.value });
+  };
+
+  const token = localStorage.getItem('jwt_token');
+
+  const register = e => {
+    e.preventDefault();
+    fetch(`http://10.58.2.56:8000/user/store/review/${props.id}`, {
+      method: 'POST',
+      headers: {
+        Authorization: token,
+      },
+      body: JSON.stringify(postData),
+    })
+      .then(res => res.json())
+      .then(res =>
+        res.message === 'SUCCESS'
+          ? props.createReview()
+          : alert('리뷰 내용을 확인해주세요')
+      );
+  };
 
   return (
     <>
@@ -102,21 +108,12 @@ const Modal = props => {
 
 export default Modal;
 
-const ModalBg = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  bottom: 0;
-  left: 0;
-  z-index: 5;
-`;
 const ModalWrap = styled.div`
   width: 100%;
   height: 490px;
   position: absolute;
-  top: 50%;
-  left: 65%;
+  top: 260px;
+  left: 250px;
   margin: -250px 0 0 -250px;
   background: #eee;
   z-index: 6;
