@@ -2,6 +2,7 @@ import React from 'react';
 import Header from '../../Components/Header/Header';
 import Filter from './Components/Filter/Filter';
 import StoreList from './Components/StoreList/StoreList';
+import StoreDetail from './Components/StoreDetail/StoreDetail';
 import './Main.scss';
 
 const Main = () => {
@@ -11,7 +12,8 @@ const Main = () => {
       <section className="main">
         <div></div>
         <Filter />
-        <StoreList />
+        {/*<StoreList /> */}
+        <StoreDetail />
       </section>
     </main>
   );
