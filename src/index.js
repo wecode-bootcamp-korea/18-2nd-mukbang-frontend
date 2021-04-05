@@ -1,7 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Routes from './Routes';
-import './Styles/common.scss';
-import './Styles/reset.scss';
+import GlobalStyle from './Styles/GlobalStyle';
 
-ReactDOM.render(<Routes />, document.getElementById('root'));
+ReactDOM.render(
+  <>
+    <GlobalStyle />
+    <Routes />
+  </>,
+  document.getElementById('root')
+);
