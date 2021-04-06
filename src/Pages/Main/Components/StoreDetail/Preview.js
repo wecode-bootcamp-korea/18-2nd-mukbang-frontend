@@ -27,7 +27,7 @@ const Preview = props => {
       <Overview>
         <div>
           <P>평점</P>
-          <Span>{rate}/5.0</Span>
+          <Span>{rate.toFixed(1)}/5.0</Span>
         </div>
         <div>
           <P>리뷰</P>

@@ -41,8 +41,8 @@ const Modal = props => {
   const token = localStorage.getItem('jwt_token');
 
   const register = e => {
-    e.preventDefault();
-    fetch(`http://10.58.2.56:8000/user/store/review/${props.id}`, {
+    // e.preventDefault();
+    fetch(`http://10.58.2.56:8000/store/${props.id}/review`, {
       method: 'POST',
       headers: {
         Authorization: token,
@@ -59,7 +59,6 @@ const Modal = props => {
 
   return (
     <>
-      <ModalBg />
       <ModalWrap>
         <form>
           <Title>이 가게에 대한 평점을 남겨주세요.</Title>

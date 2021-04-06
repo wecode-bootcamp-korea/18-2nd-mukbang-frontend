@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+
+import { useHistory, withRouter } from 'react-router-dom';
 import Roadview from './Roadview';
 import Info from './Info';
 import Preview from './Preview';
@@ -6,12 +8,16 @@ import { BiArrowBack } from 'react-icons/bi';
 import styled from 'styled-components';
 
 const StoreDetail = props => {
+  const history = useHistory();
   const [storeData, setData] = useState([]);
+
   useEffect(() => {
-    // fetch(`http://fd0bc12171bf.ngrok.io/store/detail?store_id=53`)
-    fetch('/data/storeDetail.json')
-      .then(res => res.json())
-      .then(res => setData([res.result]));
+    history.location.pathname.split('/')[3] === props.match.params.id &&
+      fetch(
+        `http://10.58.2.56:8000/store/detail?store_id=${props.match.params.id}`
+      )
+        .then(res => res.json())
+        .then(res => setData([res.result]));
   }, []);
 
   const [isRoadviewOpen, setOpen] = useState(false);
@@ -20,7 +26,7 @@ const StoreDetail = props => {
   };
 
   const goToStoreList = () => {
-    console.log('StoreList 페이지로 돌아가기');
+    history.push(`/main`);
   };
 
   return (
@@ -33,10 +39,10 @@ const StoreDetail = props => {
             </Button>
             {isRoadviewOpen
               ? '위치보기'
-              : data.region_2depth_name + ' ' + data.region_3depth_name}
+              : `${data.region_2depth_name} ${data.region_3depth_name}`}
           </Compo>
           {isRoadviewOpen ? (
-            <Roadview latitude={data.lat} longitude={data.lon} />
+            <Roadview latitude={data.lat} longitude={data.lng} />
           ) : (
             <>
               <Preview
@@ -50,8 +56,6 @@ const StoreDetail = props => {
               />
               <Info
                 address={data.full_address}
-                lat={data.lat}
-                lon={data.log}
                 phone_number={data.phone_number}
                 parking={data.is_parking}
                 wifi={data.is_wifi}
@@ -59,15 +63,14 @@ const StoreDetail = props => {
                 reviews={data.reviews}
                 opening_time={data.opening_time_description}
                 sns_url={data.sns_url}
-                metro_stations={data.metro_stations.map(
-                  data => data.name + '(' + data.line + ')'
-                )}
+                metro_stations={data.metro_stations}
                 openRoadview={openRoadview}
                 latitude={data.lat}
-                longitude={data.lon}
+                longitude={data.lng}
                 menu_pamphlet={data.menu_pamphlet_image_url}
                 menuList={data.menus}
                 visitor_photos={data.visitor_photos}
+                id={data.store_id}
               />
             </>
           )}
@@ -77,7 +80,7 @@ const StoreDetail = props => {
   );
 };
 
-export default StoreDetail;
+export default withRouter(StoreDetail);
 
 const Compo = styled.div`
   padding: 18px;

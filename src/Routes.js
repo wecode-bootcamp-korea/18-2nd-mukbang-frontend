@@ -13,6 +13,7 @@ function App(props) {
         <Route exact path="/login" component={Login} />
         <Route exact path="/main" component={Main} />
         <Route exact path="/register" component={Register} />
+        <Route exact path="/main/items/:id" component={Main} />
       </Switch>
     </Router>
   );

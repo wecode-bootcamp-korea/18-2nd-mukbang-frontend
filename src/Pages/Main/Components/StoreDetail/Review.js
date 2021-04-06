@@ -102,6 +102,7 @@ const Rating = styled.div`
 `;
 
 const ReviewArea = styled.div`
+  position: relative;
   padding: 10px 0;
   line-height: 20px;
   border-bottom: 1px solid rgb(238, 238, 238);

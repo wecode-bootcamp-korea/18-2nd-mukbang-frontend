@@ -6,7 +6,7 @@ const Map = props => {
   /*global kakao*/
   useEffect(() => {
     kakao.maps.load(() => {
-      const container = document.getElementById('map'),
+      const container = document.getElementById('map1'),
         options = {
           center: new kakao.maps.LatLng(props.latitude, props.longitude),
           level: 3,
@@ -30,7 +30,7 @@ const Map = props => {
   });
 
   return (
-    <MAP id="map">
+    <MAP id="map1">
       <Button onClick={props.openRoadview}>{BiWebcam()} 로드뷰보기</Button>
     </MAP>
   );
