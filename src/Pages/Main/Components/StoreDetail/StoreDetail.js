@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-
-import { useHistory, withRouter } from 'react-router-dom';
 import Roadview from './Roadview';
 import Info from './Info';
 import Preview from './Preview';
 import { BiArrowBack } from 'react-icons/bi';
 import styled from 'styled-components';
+import { useHistory, withRouter } from 'react-router-dom';
 
 const StoreDetail = props => {
   const history = useHistory();
@@ -20,13 +19,13 @@ const StoreDetail = props => {
         .then(res => setData([res.result]));
   }, []);
 
+  const goToStoreList = () => {
+    history.push(`/main`);
+  };
+
   const [isRoadviewOpen, setOpen] = useState(false);
   const openRoadview = () => {
     setOpen(!isRoadviewOpen);
-  };
-
-  const goToStoreList = () => {
-    history.push(`/main`);
   };
 
   return (

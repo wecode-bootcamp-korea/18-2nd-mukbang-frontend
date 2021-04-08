@@ -3,7 +3,7 @@ import LoginInForm from './Components/loginForm';
 import { useHistory } from 'react-router-dom';
 import Page from './Components/common/common';
 
-function Login() {
+function Login(props) {
   let history = useHistory();
 
   const emailLogin = () => {

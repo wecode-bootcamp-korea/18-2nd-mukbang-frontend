@@ -40,6 +40,7 @@ const FoodMap = ({
 
   const removeMark = deleteMarks => {
     if (deleteMarks.length === 0) {
+      // console.log(marks);
       return;
     } else {
       deleteMarks.forEach((mark, index) => {
@@ -54,9 +55,10 @@ const FoodMap = ({
         });
       });
       const restMarks = marks.filter(mark => mark !== false);
-      console.log(restMarks, marks);
+      // console.log(restMarks, marks);
       setMarks(restMarks);
     }
+    // console.log(1);
 
     // const clusterMarkers = marks.map(mark => mark.markData); 추가 기능 구현
     // clusterer.removeMarkers(clusterMarkers); 추가 기능 구현
@@ -84,7 +86,7 @@ const FoodMap = ({
       const newMark = { storeId: storeData[index].store_id, markData: mark };
       newMarks.push(newMark);
     });
-
+    // console.log(marks, newMarks);
     setMarks(marks.concat(newMarks));
     // clusterer.addMarkers(markers); 추가 기능 구현
     return markers;
@@ -177,10 +179,10 @@ const FoodMap = ({
         });
       }
 
-      console.log('새로운 데이터: ', newStoreData);
-      console.log('삭제할 데이터: ', deleteMarks);
-      console.log('있는 데이터: ', existStoreData);
-      console.log('전 마커', marks);
+      // console.log('새로운 데이터: ', newStoreData);
+      // console.log('삭제할 데이터: ', deleteMarks);
+      // console.log('있는 데이터: ', existStoreData);
+      // console.log('전 마커', marks);
 
       storeData.length === 0 && deleteMarks.push(...marks);
       console.log(marks, deleteMarks);
@@ -188,8 +190,8 @@ const FoodMap = ({
       newStoreData.length !== 0 && createNewMark(newStoreData, map, clusterer);
     }
   }, [storeData]);
-  console.log('최신 marks', marks);
-  console.log('최신 스토어데이터', storeData);
+  // console.log('최신 marks', marks);
+  // console.log('최신 스토어데이터', storeData);
   return (
     <Map id="FoodMap" style={{ height: '100%' }}>
       <Filter

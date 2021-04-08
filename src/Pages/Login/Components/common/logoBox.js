@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
+import LogoImage from '../../../../Image/logo.jpg';
 
 function LogoBox(props) {
   return (
     <Logo bottom>
-      {props.data.image && <LogoImg />}
+      {props.data.image && <LogoImg src={LogoImage} />}
       <Title1 px={props.data.image}>{props.data.title1}</Title1>
       <Title2 px={props.data.image} weight={props.data.image}>
         {props.data.title2}
@@ -22,12 +23,11 @@ const Logo = styled.div`
 `;
 
 const LogoImg = styled.img.attrs({
-  src: 'https://platum.kr/wp-content/uploads/2017/04/unnamed-8.png',
   alt: '로고 이미지',
 })`
   margin: 0px auto;
   margin-bottom: 10px;
-  height: 48px;
+  height: 60px;
 `;
 
 const Title1 = styled.div`
