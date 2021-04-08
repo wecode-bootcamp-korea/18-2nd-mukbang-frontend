@@ -120,7 +120,6 @@ const StoreBox = styled.div`
   display: flex;
   padding: 10px 18px;
   cursor: pointer;
-
   &:hover {
     background-color: #e5e5e5;
   }
@@ -130,7 +129,6 @@ const ImgBox = styled.div`
   width: 145px;
   height: 112px;
   margin-right: 10px;
-
   img {
     width: 100%;
     height: 100%;

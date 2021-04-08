@@ -3,20 +3,32 @@ import styled from 'styled-components';
 import { Link, withRouter } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import logo from './images/logo.png';
-
 const Header = ({ location }) => {
+  const name = localStorage.getItem('name');
+  const emailAdd = localStorage.getItem('email');
+  const email = emailAdd && emailAdd.split('@', 1)[0];
+  const idOrEmail = name ? name : email;
+  const kakaoRemoveItem = ['name', 'Login-token'];
+  const emailRemoveItem = ['email', 'token'];
+
   const { pathname } = location;
   const [tabIndex, setTabIndex] = useState(0);
   const handleTab = (e, tabIndex) => {
     setTabIndex(tabIndex);
   };
-
   useEffect(() => {
     const pathList = ['/main', '/favorite', '/register'];
     const pathCondition = pathList.includes(pathname);
     pathCondition && setTabIndex(1);
   }, [pathname]);
 
+  //추가
+  const logOut = () => {
+    idOrEmail === name
+      ? kakaoRemoveItem.forEach(item => localStorage.removeItem(item))
+      : emailRemoveItem.forEach(item => localStorage.removeItem(item));
+  };
+  //
   return (
     <HeaderBox>
       <InnerTop>
@@ -44,13 +56,17 @@ const Header = ({ location }) => {
         </GnbContainer>
         <LoginBox>
           <LoginButton>
-            <Link to="/login">로그인 및 회원가입</Link>
+            <Link to={idOrEmail ? '#' : '/login'}>
+              {idOrEmail ? idOrEmail : '로그인 및 회원가입'}
+            </Link>
           </LoginButton>
-          <SubNavBox>
-            <SubNavList>
-              <Link>설정 (로그아웃)</Link>
-            </SubNavList>
-          </SubNavBox>
+          {idOrEmail && (
+            <SubNavBox>
+              <SubNavList>
+                <Link onClick={logOut}>설정 (로그아웃)</Link>
+              </SubNavList>
+            </SubNavBox>
+          )}
         </LoginBox>
         <QuestionBox>
           <QuestionTitle>
@@ -59,7 +75,7 @@ const Header = ({ location }) => {
           </QuestionTitle>
         </QuestionBox>
       </InnerTop>
-      {pathname !== '/favorite' && pathname !== '/register' && (
+      {pathname === '/main' && (
         <TabBox>
           {subTab.map((list, subtabIndex) => (
             <TabList
@@ -77,9 +93,7 @@ const Header = ({ location }) => {
     </HeaderBox>
   );
 };
-
 export default withRouter(Header);
-
 const menuData = [
   {
     title: '아파트',
@@ -89,7 +103,7 @@ const menuData = [
   {
     title: '빌라, 투룸+',
     detail: '신축분양/매매/전월세',
-    sub: ['빌라, 투룸 찾기', '찜한 매물', '빌라 내놓기'],
+    sub: ['빌라, 투룸 찾기', '찜한 매물', '빌라 내놓기'],
   },
   {
     title: '원룸',
@@ -113,39 +127,32 @@ const menuData = [
     ],
   },
 ];
-
 const subTab = [
   { title: '맛집 찾기', link: '/main' },
   { title: '찜한 맛집', link: '/favorite' },
   { title: '맛집 내놓기', link: '/register' },
 ];
-
 const HeaderBox = styled.header`
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  max-height: 130px;
+  height: 130px;
   z-index: 10;
-  background: #fff;
 `;
-
 const InnerTop = styled.div`
   display: flex;
   border-bottom: 1px solid #e1e1e1;
   height: 80px;
 `;
-
 const LogoWrap = styled.div`
   padding: 15px 8px 14px 20px;
   margin-right: 10px;
 `;
-
 const LogoImage = styled.img`
   width: 112px;
   height: 50px;
 `;
-
 const GnbContainer = styled.ul`
   display: flex;
   color: #222;
@@ -181,7 +188,6 @@ const GnbList = styled.li`
   padding: 19px 15px 17px;
   margin-right: 15px;
   cursor: pointer;
-
   &:hover {
     ${NavTitle},${NavDetail} {
       color: #fa880b;
@@ -199,13 +205,11 @@ const SubNavList = styled.li`
     color: #000;
     font-size: 13px;
     white-space: nowrap;
-
     &:hover {
       background: #f6f6f6;
     }
   }
 `;
-
 const LoginBox = styled.div`
   position: relative;
   display: flex;
@@ -214,7 +218,6 @@ const LoginBox = styled.div`
   ${SubNavBox} {
     margin-top: 55px;
   }
-
   &:hover {
     ${SubNavBox} {
       visibility: visible;
@@ -222,7 +225,6 @@ const LoginBox = styled.div`
     }
   }
 `;
-
 const LoginButton = styled.button`
   display: block;
   padding: 0;
@@ -231,18 +233,15 @@ const LoginButton = styled.button`
   border: 1px solid #e1e1e1;
   font-size: 12px;
   cursor: pointer;
-
   :hover {
     background: rgba(0, 0, 0, 0.1);
   }
-
   a {
     display: block;
     color: #222;
     padding: 5px 8px 5px;
   }
 `;
-
 const QuestionBox = styled.div`
   display: flex;
   align-items: center;
@@ -251,7 +250,6 @@ const QuestionBox = styled.div`
   padding: 21px 21px 20px 13px;
   margin-left: 15px;
   cursor: pointer;
-
   :hover {
     background: #eee;
     h2 {
@@ -261,13 +259,11 @@ const QuestionBox = styled.div`
     }
   }
 `;
-
 const QuestionTitle = styled.h2`
   font-weight: 700;
   color: #2c60a3;
   line-height: 20px;
   text-align: right;
-
   &::after,
   &::before {
     content: '';
@@ -286,23 +282,20 @@ const QuestionTitle = styled.h2`
     z-index: 2;
   }
 `;
-
 const TabBox = styled.ul`
   display: flex;
   align-items: center;
   padding-left: 40px;
   border-bottom: 1px solid #e1e1e1;
 `;
-
 const TabList = styled.li`
   a {
     position: relative;
     display: inline-block;
     padding: 17px 20px;
     font-weight: ${props => (props.active ? '700' : '400')};
-    color: ${props => (props.active ? '#444' : '#a6a6a6')};
+    color: ${props => (props.active ? '#444' : '#A6A6A6')};
     font-size: 15px;
-
     &::after {
       content: '';
       display: ${props => (props.active ? 'block' : 'none')};
