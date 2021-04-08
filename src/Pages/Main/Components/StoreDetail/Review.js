@@ -24,11 +24,11 @@ const Review = props => {
   return (
     <StoreReview>
       <CreateBtn onClick={createReview}>리뷰 남기기</CreateBtn>
-      {modalOpen && <Modal createReview={createReview} />}
-      {reviewList.map(data => (
-        <ReviewArea>
+      {modalOpen && <Modal createReview={createReview} id={props.id} />}
+      {reviewList.map((data, idx) => (
+        <ReviewArea key={idx}>
           <UserArea>
-            <UserImg src="https://www.chrischae.kr/content/images/size/w1200/2019/12/starbucks1.jpg" />
+            <UserImg src="https://mblogthumb-phinf.pstatic.net/MjAxOTEwMjlfNDUg/MDAxNTcyMzI5NDcwNjIz.aW2F-SaHTjtOHNUlRixK7I_scEWzQDe7k-JHLkxj9_wg.fKoqWcVf8Y-vVCKGpIqUCy--2rC8Na4pHoGawaOwmVcg.PNG.moonkuki/SE-c0ad31f7-b153-4905-9f10-9d81b853e1e6.png?type=w800" />
             <Column>
               <UserId>songbetter</UserId>
               <p>{data.updated_at.split('T')[0]}</p>
