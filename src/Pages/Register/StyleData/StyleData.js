@@ -201,6 +201,7 @@ export const ImageBoxList = styled.li`
   height: 81px;
   background: #f8f5f4;
   border: 1px solid #dddddd;
+  cursor: pointer;
 
   &.menu {
     width: 142px;

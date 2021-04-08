@@ -121,14 +121,7 @@ const Register = () => {
       body: JSON.stringify({
         data: storeData,
       }),
-    })
-      .then(res => {
-        console.log(res);
-        return res.json();
-      })
-      .then(res => {
-        console.log(res);
-      });
+    });
   };
 
   const handleStoreInput = e => {
@@ -137,6 +130,16 @@ const Register = () => {
       ...storeInput,
       [name]: value,
     });
+  };
+
+  const removeMenuList = dataIndex => {
+    const filterData = menuImageList.filter((e, index) => index !== dataIndex);
+    setMenuImageList(filterData);
+  };
+
+  const removeSubwayList = name => {
+    const filterData = subwayData.filter(data => data.name !== name);
+    setSubwayData(filterData);
   };
 
   const handleRegister = (listIndex, imageName, ImageUrl) => {
@@ -219,15 +222,18 @@ const Register = () => {
                   handleStoreInput={handleStoreInput}
                   handleMenuList={handleMenuList}
                   menuImageList={menuImageList}
+                  removeMenuList={removeMenuList}
                 />
               </FormTable>
               <FormTitle>주소 & 주변역 등록</FormTitle>
               <RegisterAddress
                 storeInput={storeInput}
                 address={address}
+                subwayData={subwayData}
                 handleStoreInput={handleStoreInput}
                 handleDaumPost={handleDaumPost}
                 handleSubwayList={handleSubwayList}
+                removeSubwayList={removeSubwayList}
               />
               {daumPost && (
                 <DaumPostcode
@@ -271,6 +277,7 @@ const RegisterContainer = styled.main`
   margin-top: 80px;
 `;
 const RegisterSection = styled.section`
+  height: 100vh;
   padding-top: 23px;
   overflow-y: scroll;
 `;

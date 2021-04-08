@@ -39,7 +39,6 @@ const Home = props => {
   };
 
   const movePlace = (lat, lng) => {
-    console.log(props);
     props.history.push(`/main?lat=${lat}&lng=${lng}`);
   };
 
@@ -50,7 +49,6 @@ const Home = props => {
   //     setBannerIndex(target);
   //   }, 4000);
   // }, [BannerImages]);
-
   return (
     <HomeMainWrap>
       <BannerBox activeBanner={BannerImages[bannerIndex].target}>
@@ -205,9 +203,7 @@ const selectType = [
 const title = ['Google Play', 'App Store'];
 
 const HomeMainWrap = styled.main`
-  height: 100vh;
   padding-top: 80px;
-  overflow: scroll;
 `;
 
 const BannerBox = styled.div`
