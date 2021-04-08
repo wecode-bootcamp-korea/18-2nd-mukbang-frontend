@@ -58,7 +58,6 @@ const FoodMap = ({
       console.log(restMarks, marks);
       setMarks(restMarks);
     }
-    console.log(1);
 
     // const clusterMarkers = marks.map(mark => mark.markData); 추가 기능 구현
     // clusterer.removeMarkers(clusterMarkers); 추가 기능 구현

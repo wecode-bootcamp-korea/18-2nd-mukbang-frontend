@@ -97,11 +97,13 @@ const Button = styled.button`
 `;
 
 const Detail = styled.div`
-  background-color: rgb(238, 238, 238);
   position: absolute;
+  top: 0;
   right: 0;
   width: 400px;
   height: 100%;
   border-left: 1px solid #333;
+  background-color: rgb(238, 238, 238);
   overflow-y: scroll;
+  z-index: 5;
 `;

@@ -1,23 +1,32 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Main from './Pages/Main/Main';
+import Login from './Pages/Login/Login';
+import Home from './Pages/Home/Home';
 import Header from './Components/Header/Header';
 import Register from './Pages/Register/Register';
-import Login from './Pages/Login/Login';
 import Email from './Pages/Login/email';
 import SignUp from './Pages/Login/signup';
 
 function App(props) {
   return (
     <Router>
-      <Header component={Header} />
+      <Header />
       <Switch>
         <Route exact path="/login" component={Login} />
+<<<<<<< HEAD
+<<<<<<< HEAD
         <Route exact path="/login/email" component={Email} />
         <Route exact path="/signup/email" component={SignUp} />
         <Route exact path="/main" component={Main} />
-        <Route exact path="/register" component={Register} />
+=======
+>>>>>>> 3c0ca3a ([18기 정승옥] Conflict 해결중)
+=======
+        <Route exact path="/main" component={Main} />
+>>>>>>> a347c3f ([18기 정승옥] Conflict 해결)
         <Route exact path="/main/items/:id" component={Main} />
+        <Route exact path="/register" component={Register} />
+        <Route exact path="/home" component={Home} />
       </Switch>
     </Router>
   );
