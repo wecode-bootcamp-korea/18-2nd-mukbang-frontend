@@ -79,6 +79,8 @@ const Store = styled.div`
   width: 400px;
   height: 100%;
   border-left: 1px solid #333;
+  background: #fff;
+  z-index: 1;
 `;
 
 const Header = styled.header`

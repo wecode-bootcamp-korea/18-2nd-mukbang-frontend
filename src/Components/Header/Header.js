@@ -46,6 +46,11 @@ const Header = ({ location }) => {
           <LoginButton>
             <Link to="/login">로그인 및 회원가입</Link>
           </LoginButton>
+          <SubNavBox>
+            <SubNavList>
+              <Link>설정 (로그아웃)</Link>
+            </SubNavList>
+          </SubNavBox>
         </LoginBox>
         <QuestionBox>
           <QuestionTitle>
@@ -202,9 +207,20 @@ const SubNavList = styled.li`
 `;
 
 const LoginBox = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
   margin-left: auto;
+  ${SubNavBox} {
+    margin-top: 55px;
+  }
+
+  &:hover {
+    ${SubNavBox} {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
 `;
 
 const LoginButton = styled.button`
