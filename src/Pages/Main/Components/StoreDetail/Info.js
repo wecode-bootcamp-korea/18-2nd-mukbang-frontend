@@ -8,17 +8,12 @@ import ReviewImg from './ReviewImg';
 import styled from 'styled-components';
 
 const Info = props => {
-  const [isActive, setActive] = useState([
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-  ]);
+  const [isActive, setActive] = useState(Array(6).fill(true));
 
   const activeToggle = index => {
-    setActive(!isActive[index]);
+    let toggle = [...isActive];
+    toggle[index] = !isActive[index];
+    setActive(toggle);
   };
 
   const INFO = [
@@ -61,10 +56,10 @@ const Info = props => {
       title: '인근 전철역',
       content: (
         <Content>
-          {props.metro_stations.map((data, idx) => (
-            <ul key={idx}>
-              <Distance>
-                {(data.name + '(' + data.line + ')').toString()}까지 거리:{' '}
+          <ul>
+            {props.metro_stations.map((data, idx) => (
+              <Distance key={idx}>
+                {`${data.name}(${data.line})`.toString()}까지 거리:{' '}
                 <span>
                   {Number(
                     data.distance_from_store_m.toString().split('.')[0]
@@ -72,8 +67,8 @@ const Info = props => {
                   m
                 </span>
               </Distance>
-            </ul>
-          ))}
+            ))}
+          </ul>
         </Content>
       ),
     },
@@ -136,6 +131,7 @@ const Button = styled.button`
 `;
 
 const Content = styled.div`
+  position: relative;
   border-top: 1px solid rgb(238, 238, 238);
   padding: 18px 0px;
   color: #757575;

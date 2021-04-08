@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
+import { useHistory, withRouter } from 'react-router-dom';
 
 const StoreList = () => {
   const [data, setData] = useState({ storeCount: 0, stores: [] });
@@ -29,12 +29,10 @@ const StoreList = () => {
     }
   };
 
-  // 가게 디테일 페이지 머지 후 테스트 예정
-  // let history = useHistory();
-  // const goToStoreDetail = () => {
-  //   history.push(`/main/1`);
-  // };
-  // onClick={goToStoreDetail}
+  let history = useHistory();
+  const goToStoreDetail = id => {
+    history.push(`/main/items/${id}`);
+  };
 
   return (
     <Store>
@@ -47,7 +45,12 @@ const StoreList = () => {
           <Review>리뷰순</Review>
         </Sorting>
         {data.stores.map(store => (
-          <StoreBox key={store.id}>
+          <StoreBox
+            key={store.id}
+            onClick={() => {
+              goToStoreDetail(store.id);
+            }}
+          >
             <ImgBox>
               <img src={store.img} alt="가게 대표 사진" />
             </ImgBox>
@@ -67,7 +70,7 @@ const StoreList = () => {
   );
 };
 
-export default StoreList;
+export default withRouter(StoreList);
 
 const Store = styled.div`
   position: absolute;

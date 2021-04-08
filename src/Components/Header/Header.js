@@ -54,7 +54,7 @@ const Header = ({ location }) => {
           </QuestionTitle>
         </QuestionBox>
       </InnerTop>
-      {pathname === '/main' && (
+      {pathname !== '/favorite' && pathname !== '/register' && (
         <TabBox>
           {subTab.map((list, subtabIndex) => (
             <TabList
