@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useHistory, withRouter } from 'react-router-dom';
 
-const StoreList = props => {
+const StoreList = ({ count }) => {
   const [data, setData] = useState({ storeCount: 0, stores: [] });
   const [offset, setOffset] = useState(0);
   const [review, setReview] = useState(false);
@@ -83,7 +83,7 @@ const StoreList = props => {
   return (
     <Store>
       <Header>
-        <HeaderInfo> 가게 목록 {data.storeCount}개</HeaderInfo>
+        <HeaderInfo> 가게 목록 {count}개</HeaderInfo>
       </Header>
       <StoreLists onScroll={onScroll}>
         <Sorting>

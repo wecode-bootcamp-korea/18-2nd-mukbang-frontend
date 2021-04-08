@@ -2,7 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link, withRouter } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import logo from './images/logo.png';
+import logo from './images/logo.jpg';
+
 const Header = ({ location }) => {
   const name = localStorage.getItem('name');
   const emailAdd = localStorage.getItem('email');
@@ -46,7 +47,7 @@ const Header = ({ location }) => {
                 <SubNavBox>
                   {menu.sub.map((sub, subindex) => (
                     <SubNavList key={subindex}>
-                      <Link>{sub}</Link>
+                      <Link to={sub.link}>{sub.title}</Link>
                     </SubNavList>
                   ))}
                 </SubNavBox>
@@ -96,34 +97,48 @@ const Header = ({ location }) => {
 export default withRouter(Header);
 const menuData = [
   {
-    title: '아파트',
-    detail: '매매/전월세/신축분양',
-    sub: ['매매/전월세', '신축분양'],
-  },
-  {
-    title: '빌라, 투룸+',
-    detail: '신축분양/매매/전월세',
-    sub: ['빌라, 투룸 찾기', '찜한 매물', '빌라 내놓기'],
-  },
-  {
-    title: '원룸',
-    detail: '전월세',
-    sub: ['방 찾기', '찜한 매물', '방 내놓기(전세월세만)'],
-  },
-  {
-    title: '오피스텔',
-    detail: '도시형생활주택/전월세',
-    sub: ['오피스텔 찾기', '찜한 매물', '오피스텔 내놓기(전세월세만)'],
-  },
-  {
-    title: '창업/사무실',
-    detail: '임대/매매',
+    title: '카페/베이커리',
+    detail: '휴게음식점',
     sub: [
-      '상가・점포',
-      '사무실',
-      '공유오피스',
-      '찜한 매물',
-      '상가/사무실 내놓기',
+      { title: '맛집찾기', link: '/main' },
+      { title: '찜한맛집', link: '/favorite' },
+      { title: '맛집내놓기', link: '/register' },
+    ],
+  },
+  {
+    title: '한식/중식/일식',
+    detail: '일반음식',
+    sub: [
+      { title: '맛집찾기', link: '/main' },
+      { title: '찜한맛집', link: '/favorite' },
+      { title: '맛집내놓기', link: '/register' },
+    ],
+  },
+  {
+    title: '퓨전',
+    detail: '일반음식',
+    sub: [
+      { title: '맛집찾기', link: '/main' },
+      { title: '찜한맛집', link: '/favorite' },
+      { title: '맛집내놓기', link: '/register' },
+    ],
+  },
+  {
+    title: '양식',
+    detail: '일반음식',
+    sub: [
+      { title: '맛집찾기', link: '/main' },
+      { title: '찜한맛집', link: '/favorite' },
+      { title: '맛집내놓기', link: '/register' },
+    ],
+  },
+  {
+    title: '기타주점',
+    detail: '주류점',
+    sub: [
+      { title: '맛집찾기', link: '/main' },
+      { title: '찜한맛집', link: '/favorite' },
+      { title: '맛집내놓기', link: '/register' },
     ],
   },
 ];
@@ -137,7 +152,8 @@ const HeaderBox = styled.header`
   top: 0;
   left: 0;
   width: 100%;
-  height: 130px;
+  max-height: 130px;
+  background: #fff;
   z-index: 10;
 `;
 const InnerTop = styled.div`

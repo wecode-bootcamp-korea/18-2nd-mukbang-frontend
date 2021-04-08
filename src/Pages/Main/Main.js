@@ -1,22 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import StoreList from './Components/StoreList/StoreList';
 import StoreDetail from './Components/StoreDetail/StoreDetail';
-import { useHistory } from 'react-router-dom';
+import { useHistory, withRouter } from 'react-router-dom';
 import FoodMap from './Components/FoodMap/FoodMap';
 import styled from 'styled-components';
 
-const Main = () => {
+const Main = props => {
   const history = useHistory();
   const PATH = history.location.pathname;
   const [storeData, setStoreData] = useState([]);
   const [priceRange, setPriceRange] = useState([0, 20000]);
+  const [searchQuery, setSearchQuery] = useState('');
   const [selecCategory, setSelectCategory] = useState({
     first: Array(6).fill(false),
     second: Array(7).fill(false),
   });
   const [viewPointData, setViewPointData] = useState({
-    lat: 37.4918939171295,
-    lng: 127.032166561787,
+    lat: 30,
+    lng: 120,
     zoomLevel: 4,
   });
   const getPriceRange = (e, range) => {
@@ -81,6 +82,26 @@ const Main = () => {
       });
   }, [priceRange, selecCategory, viewPointData]);
 
+  useEffect(() => {
+    const stringToQuery = query => {
+      const [_, params] = query.split('?'); // 물음표 분리
+      return params.split('&').reduce((acc, cur) => {
+        // 프로퍼티 분리
+        const [k, v] = cur.split('='); // key, value 분리
+        return { ...acc, [k]: v };
+      }, {});
+    };
+    const queryObj = stringToQuery(props.location.search);
+    props.location.search !== '' &&
+      setViewPointData({
+        lat: queryObj.lat,
+        lng: queryObj.lng,
+        zoomLevel: 2,
+      });
+    console.log(1);
+  }, [props.location.search]);
+
+  const count = storeData.length;
   return (
     <MainSection>
       <FoodMap
@@ -90,7 +111,7 @@ const Main = () => {
         viewPointData={viewPointData}
         setViewPointData={setViewPointData}
       />
-      {PATH === '/main' ? <StoreList /> : <StoreDetail />}
+      {PATH === '/main' ? <StoreList count={count} /> : <StoreDetail />}
     </MainSection>
   );
 };
@@ -116,4 +137,4 @@ const MainSection = styled.main`
   margin-top: 130px;
 `;
 
-export default Main;
+export default withRouter(Main);

@@ -18,6 +18,7 @@ const RegisterMenu = ({
   handleStoreInput,
   handleMenuList,
   menuImageList,
+  removeMenuList,
 }) => {
   const imageListCheck = menuImageList.filter(Boolean).length;
   return (
@@ -56,7 +57,12 @@ const RegisterMenu = ({
       <RegistImageBox className="menu">
         {imageListCheck !== 0 &&
           menuImageList.map((list, index) => (
-            <ImageBoxList key={index}>
+            <ImageBoxList
+              key={index}
+              onClick={() => {
+                removeMenuList(index);
+              }}
+            >
               <ImageNumber>{index + 1}</ImageNumber>
               <PreviewImage src={list.image_url} alt="미리보기" />
             </ImageBoxList>

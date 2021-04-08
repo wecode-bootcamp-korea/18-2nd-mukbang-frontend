@@ -38,33 +38,7 @@ const FoodMap = ({
     양식: west,
   };
 
-  const removeMark = deleteMarks => {
-    if (deleteMarks.length === 0) {
-      // console.log(marks);
-      return;
-    } else {
-      deleteMarks.forEach((mark, index) => {
-        mark.markData.setMap(null);
-      });
-      marks.forEach((mark, index) => {
-        deleteMarks.forEach(deleteMark => {
-          if (mark.storeId === deleteMark.storeId) {
-            marks[index] = false;
-            return;
-          }
-        });
-      });
-      const restMarks = marks.filter(mark => mark !== false);
-      // console.log(restMarks, marks);
-      setMarks(restMarks);
-    }
-    // console.log(1);
-
-    // const clusterMarkers = marks.map(mark => mark.markData); 추가 기능 구현
-    // clusterer.removeMarkers(clusterMarkers); 추가 기능 구현
-  };
-
-  const createNewMark = (storeData, map) => {
+  const createNewMark = (storeData, map, clusterer) => {
     const markers = storeData.map(data => {
       const icon = new kakao.maps.MarkerImage(
         categoryImage[data.category],
@@ -79,16 +53,12 @@ const FoodMap = ({
       });
       return mark;
     });
-    const newMarks = [];
+    console.log(clusterer);
     markers.forEach((mark, index) => {
       CreateMapMark(kakao, map, mark, overlays, setOverlays, storeData[index]);
-      mark.setMap(map);
-      const newMark = { storeId: storeData[index].store_id, markData: mark };
-      newMarks.push(newMark);
     });
-    // console.log(marks, newMarks);
-    setMarks(marks.concat(newMarks));
-    // clusterer.addMarkers(markers); 추가 기능 구현
+    setMarks(markers);
+    clusterer.addMarkers(markers);
     return markers;
   };
 
@@ -143,55 +113,15 @@ const FoodMap = ({
       map.setCenter(
         new kakao.maps.LatLng(viewPointData.lat, viewPointData.lng)
       );
-
+      console.log(clusterer);
+      marks.forEach(mark => mark.setMap(null));
       overlays.forEach(overlay => overlay.setMap(null));
+      clusterer.clear();
 
-      const newStoreData = [];
-      const deleteMarks = [];
-      const existStoreData = [];
-
-      storeData.forEach(data => {
-        if (marks.length === 0) {
-          newStoreData.push(data);
-        } else {
-          marks.forEach((mark, index) => {
-            if (data.store_id === mark.storeId) {
-              existStoreData.push(data);
-              return;
-            } else if (index === marks.length - 1) {
-              newStoreData.push(data);
-            }
-          });
-        }
-      });
-      if (existStoreData.length === 0 && marks.length !== 0)
-        deleteMarks.push(...marks);
-      else {
-        marks.forEach(mark => {
-          existStoreData.forEach((data, index) => {
-            if (data.store_id === mark.storeId) {
-              return;
-            } else if (index === existStoreData.length - 1) {
-              deleteMarks.push(mark);
-              return;
-            }
-          });
-        });
-      }
-
-      // console.log('새로운 데이터: ', newStoreData);
-      // console.log('삭제할 데이터: ', deleteMarks);
-      // console.log('있는 데이터: ', existStoreData);
-      // console.log('전 마커', marks);
-
-      storeData.length === 0 && deleteMarks.push(...marks);
-      console.log(marks, deleteMarks);
-      removeMark(deleteMarks);
-      newStoreData.length !== 0 && createNewMark(newStoreData, map, clusterer);
+      storeData.length !== 0 && createNewMark(storeData, map, clusterer);
     }
-  }, [storeData]);
-  // console.log('최신 marks', marks);
-  // console.log('최신 스토어데이터', storeData);
+  }, [storeData, viewPointData]);
+
   return (
     <Map id="FoodMap" style={{ height: '100%' }}>
       <Filter
