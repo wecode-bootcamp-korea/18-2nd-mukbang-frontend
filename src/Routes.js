@@ -14,16 +14,9 @@ function App(props) {
       <Header />
       <Switch>
         <Route exact path="/login" component={Login} />
-<<<<<<< HEAD
-<<<<<<< HEAD
         <Route exact path="/login/email" component={Email} />
         <Route exact path="/signup/email" component={SignUp} />
         <Route exact path="/main" component={Main} />
-=======
->>>>>>> 3c0ca3a ([18기 정승옥] Conflict 해결중)
-=======
-        <Route exact path="/main" component={Main} />
->>>>>>> a347c3f ([18기 정승옥] Conflict 해결)
         <Route exact path="/main/items/:id" component={Main} />
         <Route exact path="/register" component={Register} />
         <Route exact path="/home" component={Home} />

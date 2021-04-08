@@ -40,7 +40,6 @@ const FoodMap = ({
 
   const removeMark = deleteMarks => {
     if (deleteMarks.length === 0) {
-      console.log(marks);
       return;
     } else {
       deleteMarks.forEach((mark, index) => {
@@ -85,7 +84,7 @@ const FoodMap = ({
       const newMark = { storeId: storeData[index].store_id, markData: mark };
       newMarks.push(newMark);
     });
-    console.log(marks, newMarks);
+
     setMarks(marks.concat(newMarks));
     // clusterer.addMarkers(markers); 추가 기능 구현
     return markers;
@@ -164,7 +163,7 @@ const FoodMap = ({
         }
       });
       if (existStoreData.length === 0 && marks.length !== 0)
-        deleteMarks.push(marks);
+        deleteMarks.push(...marks);
       else {
         marks.forEach(mark => {
           existStoreData.forEach((data, index) => {
@@ -184,6 +183,7 @@ const FoodMap = ({
       console.log('전 마커', marks);
 
       storeData.length === 0 && deleteMarks.push(...marks);
+      console.log(marks, deleteMarks);
       removeMark(deleteMarks);
       newStoreData.length !== 0 && createNewMark(newStoreData, map, clusterer);
     }
