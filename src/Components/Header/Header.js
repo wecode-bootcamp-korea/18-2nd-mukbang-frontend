@@ -29,7 +29,7 @@ const Header = ({ location }) => {
       ? kakaoRemoveItem.forEach(item => localStorage.removeItem(item))
       : emailRemoveItem.forEach(item => localStorage.removeItem(item));
   };
-  //
+  console.log(pathname);
   return (
     <HeaderBox>
       <InnerTop>
@@ -71,12 +71,12 @@ const Header = ({ location }) => {
         </LoginBox>
         <QuestionBox>
           <QuestionTitle>
-            중개사무소 가입
+            위코더 먹방 가입
             <br />및 광고문의
           </QuestionTitle>
         </QuestionBox>
       </InnerTop>
-      {pathname === '/main' && (
+      {pathname !== '/favorite' && pathname !== '/register' && (
         <TabBox>
           {subTab.map((list, subtabIndex) => (
             <TabList

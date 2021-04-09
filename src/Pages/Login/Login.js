@@ -2,6 +2,7 @@ import React from 'react';
 import LoginInForm from './Components/loginForm';
 import { useHistory } from 'react-router-dom';
 import Page from './Components/common/common';
+import { URL } from '../../config';
 
 function Login(props) {
   let history = useHistory();
@@ -17,13 +18,13 @@ function Login(props) {
       success: function (res) {
         const params = res.access_token;
 
-        fetch(`http://10.58.2.56:8000/user/login/kakao?access_token=${params}`)
+        fetch(`${URL}/user/login/kakao?access_token=${params}`)
           .then(res => res.json())
           .then(data => {
             if (data.token) {
-              localStorage.setItem('Login-token', data.token);
+              localStorage.setItem('jwt-token', data.token);
               localStorage.setItem('name', data.nickname);
-              history.push('/main');
+              history.push('/home');
             } else {
               alert('다시 입력해주세요.');
             }

@@ -113,7 +113,6 @@ const FoodMap = ({
       map.setCenter(
         new kakao.maps.LatLng(viewPointData.lat, viewPointData.lng)
       );
-      console.log(clusterer);
       marks.forEach(mark => mark.setMap(null));
       overlays.forEach(overlay => overlay.setMap(null));
       clusterer.clear();

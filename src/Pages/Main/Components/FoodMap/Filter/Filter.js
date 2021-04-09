@@ -187,7 +187,7 @@ const options = ['가격범위', '업종'];
 
 const FilterBox = styled.div`
   position: absolute;
-  top: 20px;
+  top: 80px;
   left: 30px;
   width: 358px;
   border: 1px solid #333;
@@ -239,6 +239,7 @@ const FilterBoxList = styled.div`
   background: #fff;
   padding: 10px;
   width: 100%;
+
   svg {
     pointer-events: none;
   }

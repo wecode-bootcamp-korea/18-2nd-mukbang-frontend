@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import ImageSlider from './ImageSlider';
 
@@ -16,6 +16,22 @@ const Preview = props => {
     introduction,
     images,
   } = props;
+
+  useEffect(() => {
+    fetch(`http://10.58.2.56:8000/user/wishlist?store_id=${props.id}`, {
+      method: 'POST',
+      headers: {
+        Authorization: localStorage.getItem('jwt-token'),
+      },
+    })
+      .then(res => {
+        return res.json();
+      })
+      .then(res => {
+        console.log(res);
+      });
+  }, [isActive]);
+
   return (
     <PreviewStyle>
       <ImageSlider images={images} />
@@ -27,7 +43,7 @@ const Preview = props => {
       <Overview>
         <div>
           <P>평점</P>
-          <Span>{rate.toFixed(1)}/5.0</Span>
+          <Span>{rate === null ? 0 : rate.toFixed(1)}/5.0</Span>
         </div>
         <div>
           <P>리뷰</P>
@@ -68,7 +84,7 @@ const Name = styled.div`
 `;
 const Label = styled.span`
   position: absolute;
-  right: 50%;
+  right: 17%;
   bottom: 25px;
   color: #ffa409;
   font-size: 15px;

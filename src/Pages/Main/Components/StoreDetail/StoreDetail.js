@@ -5,6 +5,7 @@ import Preview from './Preview';
 import { BiArrowBack } from 'react-icons/bi';
 import styled from 'styled-components';
 import { useHistory, withRouter } from 'react-router-dom';
+import { URL } from '../../../../config';
 
 const StoreDetail = props => {
   const history = useHistory();
@@ -12,9 +13,7 @@ const StoreDetail = props => {
 
   useEffect(() => {
     history.location.pathname.split('/')[3] === props.match.params.id &&
-      fetch(
-        `http://10.58.2.56:8000/store/detail?store_id=${props.match.params.id}`
-      )
+      fetch(`${URL}/store/detail?store_id=${props.match.params.id}`)
         .then(res => res.json())
         .then(res => setData([res.result]));
   }, []);
@@ -45,6 +44,7 @@ const StoreDetail = props => {
           ) : (
             <>
               <Preview
+                id={data.store_id}
                 introduction={data.one_line_introduction}
                 rate={data.rating_average}
                 review={data.review_count}
@@ -97,10 +97,10 @@ const Button = styled.button`
 
 const Detail = styled.div`
   position: absolute;
-  top: 0;
+  top: 50px;
   right: 0;
   width: 400px;
-  height: 100%;
+  height: calc(100vh - 130px);
   border-left: 1px solid #333;
   background-color: rgb(238, 238, 238);
   overflow-y: scroll;

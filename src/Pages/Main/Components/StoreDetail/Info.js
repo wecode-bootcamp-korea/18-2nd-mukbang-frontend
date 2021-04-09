@@ -97,10 +97,10 @@ const Info = props => {
           <Toggle>
             {data.title}
             <Button onClick={() => activeToggle(idx)}>
-              {isActive ? BiChevronUp() : BiChevronDown()}
+              {isActive[idx] ? BiChevronUp() : BiChevronDown()}
             </Button>
           </Toggle>
-          {isActive && data.content}
+          {isActive[idx] && data.content}
         </Infomation>
       ))}
     </>

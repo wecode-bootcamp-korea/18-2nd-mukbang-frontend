@@ -6,6 +6,7 @@ import Home from './Pages/Home/Home';
 import Register from './Pages/Register/Register';
 import Email from './Pages/Login/email';
 import SignUp from './Pages/Login/signup';
+import Favorite from './Pages/Favorite/Favorite';
 import Hidden from './Pages/Login/headerHidden';
 
 function App(props) {
@@ -20,6 +21,7 @@ function App(props) {
         <Route exact path="/main/items/:id" component={Main} />
         <Route exact path="/register" component={Register} />
         <Route exact path="/home" component={Home} />
+        <Route exact path="/favorite" component={Favorite} />
       </Switch>
     </Router>
   );
