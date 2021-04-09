@@ -60,7 +60,6 @@ const StoreList = ({ count }) => {
     );
   }, [rating, reset]);
 
-  // console.log(data.stores[0].full_address.substring(0, 5));
   const onScroll = e => {
     /// scrollHeight(전체 스크롤의 높이) , clientHeight(target의 높이 / storeLists 의 높이) , scrollTop(storeLists의 스크롤을 움직일때마다의 높이)//
     let TotalHeight = e.target.scrollHeight;
@@ -71,8 +70,6 @@ const StoreList = ({ count }) => {
       setOffset(offset + 1);
     }
   };
-
-  // 가게 디테일 페이지 머지 후 테스트 예정
 
   let history = useHistory();
 

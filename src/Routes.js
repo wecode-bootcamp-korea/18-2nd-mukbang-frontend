@@ -3,15 +3,15 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Main from './Pages/Main/Main';
 import Login from './Pages/Login/Login';
 import Home from './Pages/Home/Home';
-import Header from './Components/Header/Header';
 import Register from './Pages/Register/Register';
 import Email from './Pages/Login/email';
 import SignUp from './Pages/Login/signup';
+import Hidden from './Pages/Login/headerHidden';
 
 function App(props) {
   return (
     <Router>
-      <Header />
+      <Hidden />
       <Switch>
         <Route exact path="/login" component={Login} />
         <Route exact path="/login/email" component={Email} />
