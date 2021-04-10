@@ -4,13 +4,15 @@ import StoreDetail from './Components/StoreDetail/StoreDetail';
 import { useHistory, withRouter } from 'react-router-dom';
 import FoodMap from './Components/FoodMap/FoodMap';
 import styled from 'styled-components';
+import { URL } from '../../config';
 
 const Main = props => {
   const history = useHistory();
   const PATH = history.location.pathname;
+  const [reset, setReset] = useState(true);
+  const [sendQuery, setSendQuery] = useState('');
   const [storeData, setStoreData] = useState([]);
   const [priceRange, setPriceRange] = useState([0, 20000]);
-  const [searchQuery, setSearchQuery] = useState('');
   const [selecCategory, setSelectCategory] = useState({
     first: Array(6).fill(false),
     second: Array(7).fill(false),
@@ -71,8 +73,8 @@ const Main = props => {
     // 가격 범위 값
     const query3 = priceRange.map(price => `&price_range=${price}`).join('');
     const totalQuery = `${query}${query2}${query3}`;
-
-    fetch(`http://1945f0d40f18.ngrok.io/store${totalQuery}`)
+    setSendQuery(totalQuery);
+    fetch(`${URL}/store${totalQuery}`)
       .then(res => {
         return res.json();
       })
@@ -80,28 +82,31 @@ const Main = props => {
         const check = JSON.stringify(res.results) !== JSON.stringify(storeData);
         check && setStoreData(res.results);
       });
+    setReset(true);
   }, [priceRange, selecCategory, viewPointData]);
 
   useEffect(() => {
-    const stringToQuery = query => {
-      const [_, params] = query.split('?'); // 물음표 분리
-      return params.split('&').reduce((acc, cur) => {
-        // 프로퍼티 분리
-        const [k, v] = cur.split('='); // key, value 분리
-        return { ...acc, [k]: v };
-      }, {});
-    };
-    const queryObj = stringToQuery(props.location.search);
-    props.location.search !== '' &&
-      setViewPointData({
-        lat: queryObj.lat,
-        lng: queryObj.lng,
-        zoomLevel: 2,
-      });
-    console.log(1);
+    if (props.location.search.length !== 0) {
+      const stringToQuery = query => {
+        const [_, params] = query.split('?'); // 물음표 분리
+        return params.split('&').reduce((acc, cur) => {
+          // 프로퍼티 분리
+          const [k, v] = cur.split('='); // key, value 분리
+          return { ...acc, [k]: v };
+        }, {});
+      };
+      const queryObj = stringToQuery(props.location.search);
+      props.location.search !== '' &&
+        setViewPointData({
+          lat: queryObj.lat,
+          lng: queryObj.lng,
+          zoomLevel: 2,
+        });
+    }
   }, [props.location.search]);
 
   const count = storeData.length;
+  console.log(reset);
   return (
     <MainSection>
       <FoodMap
@@ -111,7 +116,17 @@ const Main = props => {
         viewPointData={viewPointData}
         setViewPointData={setViewPointData}
       />
-      {PATH === '/main' ? <StoreList count={count} /> : <StoreDetail />}
+      {PATH === '/main' ? (
+        <StoreList
+          count={count}
+          sendQuery={sendQuery}
+          reset={reset}
+          setReset={setReset}
+          viewPointData={viewPointData}
+        />
+      ) : (
+        <StoreDetail />
+      )}
     </MainSection>
   );
 };
@@ -133,8 +148,8 @@ const storeCategory = [
 
 const MainSection = styled.main`
   position: relative;
-  height: calc(100vh - 130px);
-  margin-top: 130px;
+  height: calc(100vh - 80px);
+  margin-top: 80px;
 `;
 
 export default withRouter(Main);

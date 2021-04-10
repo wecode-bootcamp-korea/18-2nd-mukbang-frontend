@@ -12,6 +12,10 @@ import banana from './images/banana.jpeg';
 import fusion from './images/fusion.jpeg';
 import pear from './images/pear.jpeg';
 import Salad from './images/Salad.jpeg';
+import { faUtensils } from '@fortawesome/free-solid-svg-icons';
+import { URL } from '../../config';
+
+console.log(URL);
 
 const Home = props => {
   const [tabIndex, setTabIndex] = useState(0);
@@ -31,24 +35,31 @@ const Home = props => {
   };
 
   const getSearchData = e => {
-    fetch(`http://10.58.2.56:8000/store/search?q=${searchInput}`)
-      .then(res => res.json())
-      .then(res => {
-        setSearchData(res.results === undefined ? [] : res.results);
-      });
+    console.log(searchInput);
+    searchInput !== '' &&
+      fetch(`${URL}/store/search?q=${searchInput}`)
+        .then(res => res.json())
+        .then(res => {
+          setSearchData(res.results === undefined ? [] : res.results);
+        });
   };
 
   const movePlace = (lat, lng) => {
     props.history.push(`/main?lat=${lat}&lng=${lng}`);
   };
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     const target =
-  //       bannerIndex >= BannerImages.length - 1 ? 0 : bannerIndex + 1;
-  //     setBannerIndex(target);
-  //   }, 4000);
-  // }, [BannerImages]);
+  useEffect(() => {
+    function autoBanner() {
+      setTimeout(() => {
+        const target =
+          bannerIndex >= BannerImages.length - 1 ? 0 : bannerIndex + 1;
+        setBannerIndex(target);
+      }, 4000);
+    }
+    autoBanner();
+    return () => clearTimeout(autoBanner);
+  }, [BannerImages]);
+  console.log(URL);
   return (
     <HomeMainWrap>
       <BannerBox activeBanner={BannerImages[bannerIndex].target}>
@@ -102,6 +113,7 @@ const Home = props => {
                         movePlace(lat, lng);
                       }}
                     >
+                      <FontAwesomeIcon icon={faUtensils} />
                       <SearchName>
                         {store_name}
                         {near_metro_stations.length !== 0 &&
@@ -442,6 +454,7 @@ const SearchListBox = styled.ul`
 `;
 
 const SearchListItem = styled.li`
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -452,6 +465,12 @@ const SearchListItem = styled.li`
 
   &:hover {
     background: #f6f6f6;
+  }
+  svg {
+    position: absolute;
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%);
   }
 `;
 

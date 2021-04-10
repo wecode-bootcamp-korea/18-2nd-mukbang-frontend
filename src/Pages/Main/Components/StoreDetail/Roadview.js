@@ -20,5 +20,5 @@ export default Rodeview;
 
 const View = styled.div`
   width: 100%;
-  height: 100%;
+  height: calc(100% - 50px);
 `;

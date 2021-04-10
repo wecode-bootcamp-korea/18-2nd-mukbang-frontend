@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import SignUpFrom from './Components/signupForm';
 import { useHistory } from 'react-router-dom';
 import Page from './Components/common/common';
+import { URL } from '../../config';
 
 function SignUp() {
   const [inputs, setInputs] = useState({
@@ -22,7 +23,7 @@ function SignUp() {
   let history = useHistory();
 
   const smscoderequest = () => {
-    fetch('http://10.58.7.226:8000/user/smscoderequest', {
+    fetch(`${URL}/user/smscoderequest`, {
       method: 'POST',
       body: JSON.stringify({
         auth_phone: inputs.text,
@@ -39,7 +40,7 @@ function SignUp() {
   const code = localStorage.getItem('smscode');
 
   const smscodecheck = () => {
-    fetch('http://10.58.7.226:8000/user/smscodecheck', {
+    fetch(`${URL}/user/smscodecheck`, {
       method: 'POST',
       body: JSON.stringify({
         auth_code: inputs.text,
@@ -70,7 +71,7 @@ function SignUp() {
   const jwt_token = localStorage.getItem('jwt_token');
 
   const signUpOk = () => {
-    fetch('http://10.58.7.226:8000/user/signup', {
+    fetch(`${URL}/user/signup`, {
       method: 'POST',
       body: JSON.stringify({
         email: inputs.email,
@@ -78,7 +79,7 @@ function SignUp() {
         auth_token: jwt_token,
       }),
     }).then(() => {
-      fetch('http://10.58.7.226:8000/user/signin', {
+      fetch(`${URL}/user/signin`, {
         method: 'POST',
         body: JSON.stringify({
           email: inputs.email,
@@ -91,7 +92,7 @@ function SignUp() {
           if (result.message === 'SUCCESS_SIGNIN') {
             localStorage.setItem('jwt-token', result.token);
             localStorage.setItem('email', inputs.email);
-            history.push('/main');
+            history.push('/home');
           }
         });
     });

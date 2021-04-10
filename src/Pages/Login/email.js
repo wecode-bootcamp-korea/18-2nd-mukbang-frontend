@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import EmailForm from './Components/emailForm';
 import { useHistory } from 'react-router-dom';
 import Page from './Components/common/common';
+import { URL } from '../../config';
 
 function Email() {
   const [inputs, setInputs] = useState({
@@ -27,7 +28,7 @@ function Email() {
   };
 
   const goToMain = () => {
-    fetch('http://10.58.4.84:8000/user/signin', {
+    fetch(`${URL}/user/signin`, {
       method: 'POST',
       body: JSON.stringify({
         email: inputs.email,
@@ -44,6 +45,7 @@ function Email() {
         }
       });
   };
+
   return (
     <Page>
       <EmailForm

@@ -101,6 +101,7 @@ const ClickButton = styled.div`
   height: 50px;
   background-color: rgb(250, 149, 11);
   margin-bottom: 10px;
+  cursor: pointer;
 `;
 
 const Content = styled.div`

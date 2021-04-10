@@ -14,6 +14,7 @@ import StoreDetail from './StoreDetail/StoreDetail';
 import { FormTable, FormButton, FormBottomBox } from './StyleData/StyleData';
 import adBanner1 from './images/adBanner1.png';
 import adBanner2 from './images/adBanner2.png';
+import { URL } from '../../config';
 
 const Register = () => {
   const [storeInput, setStoreInput] = useState({});
@@ -116,12 +117,22 @@ const Register = () => {
       menus: menuImageList,
       metros: subwayData,
     };
-    fetch('http://10.58.2.56:8000/store', {
+    console.log(storeImages, allMenuImage, storeData);
+    fetch(`${URL}/store`, {
       method: 'POST',
       body: JSON.stringify({
         data: storeData,
       }),
-    });
+    })
+      .then(res => res.json())
+      .then(res => {
+        console.log(res);
+        if (res.message === 'KEY_ERROR') {
+          alert('다시 작성해주세요.');
+        } else if (res.message === 'SUCCESS') {
+          alert('맛집이 등록됐습니다.');
+        }
+      });
   };
 
   const handleStoreInput = e => {
@@ -277,9 +288,7 @@ const RegisterContainer = styled.main`
   margin-top: 80px;
 `;
 const RegisterSection = styled.section`
-  height: 100vh;
   padding-top: 23px;
-  overflow-y: scroll;
 `;
 const RegisterInnerContainer = styled.div`
   display: flex;
