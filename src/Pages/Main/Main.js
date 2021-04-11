@@ -18,8 +18,8 @@ const Main = props => {
     second: Array(7).fill(false),
   });
   const [viewPointData, setViewPointData] = useState({
-    lat: 30,
-    lng: 120,
+    lat: 37.50516782598803,
+    lng: 127.04870879368039,
     zoomLevel: 4,
   });
   const getPriceRange = (e, range) => {
@@ -59,6 +59,7 @@ const Main = props => {
       pixel_height: deviceHeight,
       pixel_width: deviceWidth,
     };
+
     // 좌표, 줌레벨, 뷰포트 값
     const query = Object.entries(dataList)
       .map((item, index) => {
@@ -72,7 +73,9 @@ const Main = props => {
       .join('');
     // 가격 범위 값
     const query3 = priceRange.map(price => `&price_range=${price}`).join('');
+
     const totalQuery = `${query}${query2}${query3}`;
+
     setSendQuery(totalQuery);
     fetch(`${URL}/store${totalQuery}`)
       .then(res => {
@@ -95,7 +98,9 @@ const Main = props => {
           return { ...acc, [k]: v };
         }, {});
       };
+
       const queryObj = stringToQuery(props.location.search);
+
       props.location.search !== '' &&
         setViewPointData({
           lat: queryObj.lat,
@@ -106,7 +111,6 @@ const Main = props => {
   }, [props.location.search]);
 
   const count = storeData.length;
-  console.log(reset);
   return (
     <MainSection>
       <FoodMap

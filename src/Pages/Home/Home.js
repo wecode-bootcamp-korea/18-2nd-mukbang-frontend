@@ -15,8 +15,6 @@ import Salad from './images/Salad.jpeg';
 import { faUtensils } from '@fortawesome/free-solid-svg-icons';
 import { URL } from '../../config';
 
-console.log(URL);
-
 const Home = props => {
   const [tabIndex, setTabIndex] = useState(0);
   const [bannerIndex, setBannerIndex] = useState(0);
@@ -35,7 +33,6 @@ const Home = props => {
   };
 
   const getSearchData = e => {
-    console.log(searchInput);
     searchInput !== '' &&
       fetch(`${URL}/store/search?q=${searchInput}`)
         .then(res => res.json())
@@ -59,7 +56,7 @@ const Home = props => {
     autoBanner();
     return () => clearTimeout(autoBanner);
   }, [BannerImages]);
-  console.log(URL);
+
   return (
     <HomeMainWrap>
       <BannerBox activeBanner={BannerImages[bannerIndex].target}>
@@ -98,6 +95,7 @@ const Home = props => {
             </SearchBtn>
             <SearchListBox>
               {searchData.length !== 0 &&
+                searchInput.length !== 0 &&
                 searchData.map((data, index) => {
                   const {
                     store_name,
@@ -218,7 +216,7 @@ const HomeMainWrap = styled.main`
   padding-top: 80px;
 `;
 
-const BannerBox = styled.div`
+const BannerBox = styled.section`
   position: relative;
   height: 460px;
   background: url(${props => props.activeBanner}) no-repeat;
@@ -412,7 +410,7 @@ const ImageBanner = styled.img`
   right: 75px;
   width: 120px;
   height: 120px;
-  z-index: 2;
+  z-index: 1;
 `;
 const AppBannerBox = styled.div`
   width: 520px;
@@ -448,9 +446,11 @@ const SearchListBox = styled.ul`
   position: absolute;
   top: 70px;
   width: 100%;
+  max-height: 400px;
   background: #fff;
   border-radius: 5px;
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+  overflow-y: auto;
 `;
 
 const SearchListItem = styled.li`

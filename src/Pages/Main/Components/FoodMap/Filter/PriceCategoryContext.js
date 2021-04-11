@@ -22,6 +22,7 @@ const PriceCategoryProvider = ({ children }) => {
           second: Array(7).fill(false),
         });
   };
+
   const handleCategorySubOrAll = (target, saveType, targetCategory, name) => {
     const nowCheck = targetCategory.filter(Boolean).length;
     const nowSub = targetCategory[Number(target - 1)];

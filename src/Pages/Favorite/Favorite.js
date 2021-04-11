@@ -1,6 +1,5 @@
 import React from 'react';
 import { useEffect, useState } from 'react/cjs/react.development';
-import { URL } from '../../config';
 import styled from 'styled-components';
 
 const Favorite = () => {

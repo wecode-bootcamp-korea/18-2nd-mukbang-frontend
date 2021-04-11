@@ -62,10 +62,10 @@ const PriceOption = ({ getPriceRange, state, action, selectOption }) => {
       </OptionTitleBox>
       <RangeSliderBox>
         <PriceSlider
-          value={price}
           min={0}
           max={20000}
           step={1000}
+          value={price}
           marks={marks}
           aria-labelledby="range-slider"
           onChange={action.handlePrice}

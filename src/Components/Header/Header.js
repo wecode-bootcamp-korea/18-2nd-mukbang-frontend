@@ -29,7 +29,7 @@ const Header = ({ location }) => {
       ? kakaoRemoveItem.forEach(item => localStorage.removeItem(item))
       : emailRemoveItem.forEach(item => localStorage.removeItem(item));
   };
-  console.log(pathname);
+
   return (
     <HeaderBox>
       <InnerTop>

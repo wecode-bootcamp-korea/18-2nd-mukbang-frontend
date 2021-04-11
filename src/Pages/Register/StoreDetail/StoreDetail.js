@@ -32,7 +32,6 @@ const StoreDetail = ({ handleStoreInput }) => {
               ) : index <= 6 ? (
                 <FormInput
                   type="text"
-                  className="text"
                   name={list.name}
                   wide={wideInput}
                   onChange={handleStoreInput}
@@ -43,7 +42,6 @@ const StoreDetail = ({ handleStoreInput }) => {
                     <RadioLabel key={index}>
                       <FormInput
                         type="radio"
-                        className="radio"
                         name={list.name}
                         value={index}
                         onChange={handleStoreInput}

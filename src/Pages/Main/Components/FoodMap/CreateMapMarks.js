@@ -3,7 +3,7 @@ export const CreateMapMark = (
   map,
   mark,
   overlays,
-  setOverlays,
+  overlayList,
   storeData
 ) => {
   const {
@@ -77,7 +77,7 @@ export const CreateMapMark = (
     yAnchor: 1.3,
     zIndex: 3,
   });
-  setOverlays([...overlays, overlay]);
+  overlayList.push(overlay);
 
   const createOverlay = (overlay, map) => {
     return function () {

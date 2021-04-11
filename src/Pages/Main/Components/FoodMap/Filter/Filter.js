@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown, faSearch } from '@fortawesome/free-solid-svg-icons';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import PriceOption from './PriceOption/PriceOption';
 import StoreOption from './StoreOption/StoreOption';
 import {
@@ -12,7 +12,6 @@ import {
 const { kakao } = window;
 
 const Filter = ({
-  ps,
   viewPointData,
   setViewPointData,
   getPriceRange,
@@ -81,17 +80,16 @@ const Filter = ({
   return (
     <PriceCategoryProvider>
       <FilterBox>
-        <FilterBoxList className="search">
+        <FilterBoxList>
           <FilterInput
-            className="search"
-            name="search"
             type="text"
+            name="search"
             placeholder="지역, 지하철역, 학교 검색"
             value={searchInput}
             onChange={searchOnChange}
             onKeyUp={placeSubmit}
           />
-          <FilterButton onClick={placeSubmit} className="searchBtn">
+          <FilterButton onClick={placeSubmit} searchBtn>
             <FontAwesomeIcon icon={faSearch} />
           </FilterButton>
           {searchList.length !== 0 && (
@@ -115,43 +113,43 @@ const Filter = ({
         </FilterBoxList>
         <PriceCategoryConsumer>
           {({ state, action }) => {
-            const { category } = state;
-            const categorySelectCount =
+            const { price, category } = state;
+            const priceSelect = price[0] !== 0 && price[1] !== 20000;
+            const categorySelectCheck =
               category.first.filter(Boolean).length +
-              category.second.filter(Boolean).length;
-
-            const priceActive = selectOption === 1 ? 'active' : 'false';
-            const cateogryActive =
-              categorySelectCount !== 0 ? 'active' : 'false';
-
+                category.second.filter(Boolean).length !==
+              0;
             return (
               <>
-                <FilterBoxList className="bt1e">
+                <FilterBoxList>
                   <FilterTab>
-                    {options.map((option, index) => (
-                      <FilterTabList
-                        key={index}
-                        className={index === 0 ? priceActive : cateogryActive}
-                        onClick={e => {
-                          clickSelectOption(e, index + 1);
-                        }}
-                      >
-                        {option}
-                        <FontAwesomeIcon icon={faCaretDown} />
-                      </FilterTabList>
-                    ))}
+                    {options.map((option, index) => {
+                      const activeTab =
+                        index === 0
+                          ? selectOption === index + 1 || priceSelect
+                          : selectOption === index + 1 || categorySelectCheck;
+                      return (
+                        <FilterTabList
+                          key={index}
+                          activeTab={activeTab}
+                          onClick={e => {
+                            clickSelectOption(e, index + 1);
+                          }}
+                        >
+                          {option}
+                          <FontAwesomeIcon icon={faCaretDown} />
+                        </FilterTabList>
+                      );
+                    })}
                   </FilterTab>
                 </FilterBoxList>
                 {selectOption && (
                   <>
-                    <FilterBoxList
-                      className="priceStoreBox"
-                      selectOption={selectOption}
-                    >
+                    <FilterBoxList priceStoreBox selectOption={selectOption}>
                       <PriceOption
-                        getPriceRange={getPriceRange}
                         state={state}
                         action={action}
+                        getPriceRange={getPriceRange}
                         selectOption={selectOption}
                       />
                       <StoreOption
@@ -161,16 +159,16 @@ const Filter = ({
                         selectOption={selectOption}
                       />
                     </FilterBoxList>
-                    <FilterBoxList className="resetViewBox">
+                    <FilterBoxList resetViewBox>
                       <FilterButton
-                        className="resetBtn"
+                        resetBtn
                         onClick={e => {
                           action.handleReset(e, selectOption);
                         }}
                       >
                         초기화
                       </FilterButton>
-                      <FilterButton className="viewBtn">맛집보기</FilterButton>
+                      <FilterButton viewBtn>맛집보기</FilterButton>
                     </FilterBoxList>
                   </>
                 )}
@@ -197,41 +195,49 @@ const FilterBox = styled.div`
 const FilterInput = styled.input`
   width: 100%;
   outline: none;
-
-  &.search {
-    padding-left: 10px;
-    height: 30px;
-    border: 1px solid #fb8807;
-    border-radius: 3px;
-  }
+  ${props =>
+    props.name === 'search' &&
+    css`
+      padding-left: 10px;
+      height: 30px;
+      border: 1px solid #fb8807;
+      border-radius: 3px;
+    `}
 `;
 const FilterButton = styled.button`
   cursor: pointer;
   height: 100%;
 
-  &.searchBtn {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    width: 30px;
-    height: 30px;
-    background: #fb8807;
-    border-radius: 3px;
-    color: #fff;
-    transform: translateY(-50%);
-  }
-  &.resetBtn {
-    flex-grow: 3;
-    font-size: 16px;
-  }
-  &.viewBtn {
-    flex-grow: 7;
-    background: #fa950b;
-    border-radius: 7px;
-    font-weight: 700;
-    font-size: 16px;
-    color: #fff;
-  }
+  ${props => {
+    const { searchBtn, resetBtn, viewBtn } = props;
+    if (searchBtn) {
+      return css`
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        width: 30px;
+        height: 30px;
+        background: #fb8807;
+        border-radius: 3px;
+        color: #fff;
+        transform: translateY(-50%);
+      `;
+    } else if (resetBtn) {
+      return css`
+        flex-grow: 3;
+        font-size: 16px;
+      `;
+    } else if (viewBtn) {
+      return css`
+        flex-grow: 7;
+        background: #fa950b;
+        border-radius: 7px;
+        font-weight: 700;
+        font-size: 16px;
+        color: #fff;
+      `;
+    }
+  }}
 `;
 
 const FilterBoxList = styled.div`
@@ -243,23 +249,21 @@ const FilterBoxList = styled.div`
   svg {
     pointer-events: none;
   }
-
-  &.priceStoreBox {
-    max-height: 360px;
-    padding: 0;
-    background: #eee;
-    border-top: 1px solid #eeeeee;
-    overflow-y: ${props => (props.selectOption === 2 ? 'scroll' : 'none')};
-  }
-  &.resetViewBox {
-    display: flex;
-    height: 60px;
-  }
-  &.store {
-    border: none;
-    border-top: 1px solid #eee;
-    overflow-y: scroll;
-  }
+  ${({ priceStoreBox, resetViewBox }) => {
+    if (priceStoreBox)
+      return css`
+        max-height: 360px;
+        padding: 0;
+        background: #eee;
+        border-top: 1px solid #eeeeee;
+        overflow-y: ${props => (props.selectOption === 2 ? 'auto' : 'none')};
+      `;
+    else if (resetViewBox)
+      return css`
+        display: flex;
+        height: 60px;
+      `;
+  }};
 `;
 
 const FilterTab = styled.ul`
@@ -278,22 +282,23 @@ const FilterTabList = styled.li`
   color: #222;
   line-height: 30px;
   cursor: pointer;
-
   svg {
     margin-left: 5px;
     color: #333;
     pointer-events: none;
   }
 
-  &.active {
-    background: #fef4e5;
-    border: 1px solid #fb8807;
-    font-weight: 700;
-    color: #fb8807;
-    svg {
+  ${props =>
+    props.activeTab &&
+    css`
+      background: #fef4e5;
+      border: 1px solid #fb8807;
+      font-weight: 700;
       color: #fb8807;
-    }
-  }
+      svg {
+        color: #fb8807;
+      }
+    `};
 `;
 
 const SearchListBox = styled.ul`

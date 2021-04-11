@@ -15,6 +15,7 @@ import west from './images/west.png';
 import './FoodMap.scss';
 
 const { kakao } = window;
+
 const FoodMap = ({
   storeData,
   viewPointData,
@@ -53,11 +54,12 @@ const FoodMap = ({
       });
       return mark;
     });
-    console.log(clusterer);
+    const overlayList = [];
     markers.forEach((mark, index) => {
-      CreateMapMark(kakao, map, mark, overlays, setOverlays, storeData[index]);
+      CreateMapMark(kakao, map, mark, overlays, overlayList, storeData[index]);
     });
     setMarks(markers);
+    setOverlays(overlayList);
     clusterer.addMarkers(markers);
     return markers;
   };
@@ -69,6 +71,7 @@ const FoodMap = ({
         center: new kakao.maps.LatLng(viewPointData.lat, viewPointData.lng),
         level: viewPointData.zoomLevel,
       };
+
       const map = new kakao.maps.Map(container, options);
       const clusterer = new kakao.maps.MarkerClusterer({
         map: map,

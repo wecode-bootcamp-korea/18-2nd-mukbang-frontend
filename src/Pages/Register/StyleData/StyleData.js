@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const DetailBox = styled.div`
   padding: 10px 20px;
@@ -79,15 +79,21 @@ export const FormOption = styled.option``;
 export const FormInput = styled.input`
   padding: 0;
   background: #fff;
-  &.text {
-    width: ${props => (props.wide ? '100%' : '180px;')};
-    height: 22px;
-    padding-left: 5px;
-    border: 1px solid #a6a6a6;
-  }
-  &.radio {
-    margin: 0 5px 0 0;
-  }
+  ${props => {
+    const { type } = props;
+    if (type === 'text') {
+      return css`
+        width: ${props => (props.wide ? '100%' : '180px;')};
+        height: 22px;
+        padding-left: 5px;
+        border: 1px solid #a6a6a6;
+      `;
+    } else if (type === 'radio') {
+      return css`
+        margin: 0 5px 0 0;
+      `;
+    }
+  }}
   &.address {
     width: 200px;
   }
